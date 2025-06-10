@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
   changeCurrentPassword,
   CreateUser,
+  DeleteUser,
   forgotPassword,
   homePage,
   LoginUser,
@@ -14,6 +15,7 @@ import {
   verifyUser,
 } from "../Controller/user.controller.js";
 import { verifyJWT } from "../Middlewares/auth.middleware.js";
+
 
 
 const router = Router();
@@ -32,5 +34,6 @@ router.post("/change_password",verifyJWT ,  changeCurrentPassword);
 router.post("/forgotPassword", forgotPassword);
 router.post("/resetpassword" ,resetPassword);
 router.get("/splash",verifyJWT , SplashScreen);
+router.delete("/DeleteUser",verifyJWT , DeleteUser)
 
 export default router;

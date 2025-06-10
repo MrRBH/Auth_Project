@@ -494,13 +494,22 @@ const DeleteUser = asyncHandler(async(req,res)=>{
   if(!email){
     throw new ApiError(404,"User not found")
   }
+  const loginuser = req.user?._id;
+  if(!loginuser ){
+    throw new ApiError(404,"Unauthenticated user")
+  }
   const user = User.deleteOne(email)
   if(!user){
     throw new ApiError(404,"User not found")
   }
-  await user.remove()
+  const session = await Session.deleteMany({ userId: loginuser });
+  if (!session) {
+    throw new ApiError(404, "Session not found or already logged out");
+  }
+  await user.deleteOne()
+  
   res.status(200).json(
-    new ApiResponse(200, {}, "User deleted successfully")
+    new ApiResponse(200, {}, "User deleted successfully From all Devices." )
   ); 
   
 })
@@ -546,16 +555,16 @@ const SplashScreen = asyncHandler(async(req ,res)=>{
 
 export {
   generateAccessAndRefereshTokens,
-  LoginUser,
+  verifyUser, 
   VerifyOtp,
-  LogoutUser,
-  changeCurrentPassword,
-  homePage,
-  RegenrateOtp,
+  CreateUser,
+  LoginUser,
   forgotPassword,
   resetPassword,
-  verifyUser, 
-  CreateUser,
+  RegenrateOtp,
+  changeCurrentPassword,
+  LogoutUser,
   DeleteUser,
-  SplashScreen 
+  SplashScreen, 
+  homePage,
 };

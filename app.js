@@ -6,7 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { changeCurrentPassword, forgotPassword, LoginUser, RegenrateOtp, VerifyOtp } from "./Controller/user.controller.js";
 import { verifyJWT } from "./Middlewares/auth.middleware.js";
-import { blogList } from "./Controller/Blog.controller.js";
+// import { blogList } from "./Controller/Blog.controller.js";
 
 
 
